@@ -157,13 +157,13 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
 	Route::get('user','UserController@index');
 });
 
-Route::group([
-	'prefix' => 'admin',
-	'namespace' => 'Admin'
-],function(){
-	Route::get('setting','SettingController@index');
-	Route::get('show/{id?}','SettingController@show');
-	Route::get('user','UserController@index');
-});
+// Route::group([
+// 	'prefix' => 'admin',
+// 	'namespace' => 'Admin'
+// ],function(){
+// 	Route::get('setting','SettingController@index');
+// 	Route::get('show/{id?}','SettingController@show');
+// 	Route::get('user','UserController@index');
+// });
 
 Route::resource('todos', 'TodoController');

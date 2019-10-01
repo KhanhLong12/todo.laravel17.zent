@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Todo;
 use Illuminate\Http\Request;
-
 class TodoController extends Controller
 {
     /**
@@ -13,7 +13,10 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $list = ['php', 'laravel'];
+        //$list = \DB::table('todos')->get();
+        $list = Todo::get();
+        // dd($list);
+        // $list = ['php', 'laravel'];
         return view('todo')->with('list', $list);
     }
 

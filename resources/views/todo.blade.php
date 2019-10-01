@@ -12,23 +12,23 @@
             <thead>
                 @if(count($list) > 0)
                 <tr>
-                    <th>#</th>
-                    <th>Todo</th>
+                    <th>id</th>
+                    <th>title</th>
+                    <th>content</th>
                     <th>Created at</th>
-                    <th>Updated at</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($list as $key => $item)
+                    @foreach($list as $item)
                         <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{ $item }}</td>
-                            <td>23/8/2019</td>
-                            <td>23/8/2019</td>
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->title }}</td>
+                            <td>{{ $item->content }}</td>
+                            <td>{{ $item->created_at }}</td>
                             <td>
-                                <a style="display: inline-block; width: 67px;" href="{{ route('todos.edit', $key+1) }}" class="btn btn-warning">Edit</a>
-                                <a style="display: inline-block; width: 67px;" href="{{ route('todos.show', $key+1) }}" class="btn btn-info">show</a>
+                                <a style="display: inline-block; width: 67px;" href="" class="btn btn-warning">Edit</a>
+                                <a style="display: inline-block; width: 67px;" href="" class="btn btn-info">show</a>
                                 <form style="display: inline-block;" action="#" method="post" accept-charset="utf-8">
                                     @csrf
                                     {{method_field('delete')}}

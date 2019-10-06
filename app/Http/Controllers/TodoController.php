@@ -14,10 +14,11 @@ class TodoController extends Controller
     public function index()
     {
         //$list = \DB::table('todos')->get();
-        $list = Todo::get();
-        // dd($list);
+        // $list = Todo::get();
+        $list = Todo::Latest()->get();
+         // dd($list);
         // $list = ['php', 'laravel'];
-        return view('todo')->with('list', $list);
+        return view('todo.todo')->with('list', $list);
     }
 
     /**
@@ -27,7 +28,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-         return view('create');
+         return view('todo.create');
     }
 
     /**
@@ -36,9 +37,26 @@ class TodoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request)//$request lưu trữ toàn bộ dữ liệu bên client
     {
-        return 'store';
+        // lấy tất cả dữ liệu:
+        // $data = $request->all();
+        // Nhận dữ liệu từ request:
+        $title = $request->get('title');
+        $content = $request->get('content');
+        $status = $request->get('status');
+        // dd($status);
+
+        //lưu dữ liệu vào đối tượng $todo
+        $todo = new Todo();
+        $todo->title = $title;
+        $todo->content = $content;
+        $todo->status = $status;
+        $todo->user_id = rand(1,100);//random user_id từ 1-100
+        $todo->save();
+        //chuyển hướng về trang danh sách
+        return redirect()->route('todos.index');
+
     }
 
     /**
@@ -49,7 +67,8 @@ class TodoController extends Controller
      */
     public function show($id)
     {
-        return view('show');
+        $item = Todo::find($id);
+        return view('todo.show')->with('item',$item);
     }
 
     /**
@@ -60,7 +79,11 @@ class TodoController extends Controller
      */
     public function edit($id)
     {
-        return view('edit');
+         // dd($id);
+        //lấy dữ liệu với $id:
+         $item = Todo::find($id);
+         // dd($item);
+        return view('todo.edit')->with('item',$item);
     }
 
     /**
@@ -72,7 +95,24 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return 'update';
+        $title = $request->get('title');
+        $content = $request->get('content');
+        $status = $request->get('status');
+        // dump($title);
+        // dump($content);
+        // dump($status);
+        // dd();
+        // Tìm todo tương ứng với id
+        $todo = Todo::find($id);
+        // dd($todo);
+        //Cập nhật dữ liệu mới
+        $todo->title = $title;
+        $todo->content = $content;
+        $todo->status = $status;
+        // Lưu dữ liệu
+        $todo->save();
+        //Chuyển hướng đến trang danh sách
+        return redirect()->route('todos.index');
     }
 
     /**
@@ -83,6 +123,8 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        return 'destroy';
+        Todo::destroy($id);
+        // dd($id);
+        return redirect()->route('todos.index');
     }
 }

@@ -167,3 +167,5 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
 // });
 
 Route::resource('todos', 'TodoController');
+
+Route::resource('users', 'UserController');
